@@ -117,3 +117,55 @@ note: having variables that is unused can also cause the program to collapse
 
 ------hello
 const url = ;
+
+-----
+the code that uses passed in text
+
+
+const { SlashCommandBuilder } = require('discord.js');
+const axios = require('axios');
+
+
+async function callOpenAI(text) {
+    const url = 'https://api.openai.com/v1/chat/completions'
+    const headers = {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer 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",
+    };
+
+    console.log("executed")
+    
+    try {
+        const response = await axios.post(url, {
+            model: "gpt-3.5-turbo",
+            messages: [{ role: "user", content: "Say this is a test!" }],
+            temperature: 0.7
+        }, { headers });
+    
+        return response.data;
+    } catch (error) {
+        console.error('Error calling OpenAI API:', error);
+        return 'An error occurred while processing your request.';
+    }
+}
+
+module.exports = {
+	data: new SlashCommandBuilder()
+		.setName('openaiapi')
+		.setDescription('calls gpt4 for chat completion'),
+	async execute(interaction) {
+        const text = 'efficient sorting algorithms'
+        
+        const response = await callOpenAI(text);
+        console.log(response)
+        await interaction.reply("hello");
+      
+	},
+};
+
+
+-----
+const out = await callOpenAI();
+        const message = out.choices[0].message.content
+        console.log(out)
+        await interaction.reply("hello");
