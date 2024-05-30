@@ -113,3 +113,7 @@ note: having variables that is unused can also cause the program to collapse
 =------temp garbage from openai project----
  // const { options } = interaction;
         // const text = options.getString('text');
+
+
+------hello
+const url = ;

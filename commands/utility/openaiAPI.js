@@ -1,28 +1,25 @@
 const { SlashCommandBuilder } = require('discord.js');
-const { axios } = require ('axios');
+const axios = require('axios');
 
 
-async function callOpenAI(text) {
-    const apiKey = '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';
-    const url = 'https://api.openai.com/v1/chat/completions'; 
+async function callOpenAI() {
+    const url = 'https://api.openai.com/v1/chat/completions'
+    const headers = {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer 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",
+    };
 
+    console.log("executed")
+    
     try {
         const response = await axios.post(url, {
-            messages: [
-                {
-                    role: 'system',
-                    content: text,
-                },
-            ],
-            model: 'gpt-4', 
-        }, {
-            headers: {
-                'Authorization': `Bearer ${apiKey}`,
-                'Content-Type': 'application/json',
-            },
-        });
+            model: "gpt-3.5-turbo",
+            messages: [{ role: "user", content: "Say this is a test!" }],
+            temperature: 0.7
+        }, { headers });
         
-        return response.data.choices[0].message.content.trim(); 
+        console.log(response.data)
+        return response.data
     } catch (error) {
         console.error('Error calling OpenAI API:', error);
         return 'An error occurred while processing your request.';
@@ -34,11 +31,17 @@ module.exports = {
 		.setName('openaiapi')
 		.setDescription('calls gpt4 for chat completion'),
 	async execute(interaction) {
+        await interaction.deferReply();
 
-        const text = 'efficient sorting algorithms'
-        
-        const response = await callOpenAI(text);
-        await interaction.reply(response);
-      
+        const response = await callOpenAI();
+
+        if (response && response.choices && response.choices.length > 0) {
+            const messageContent = response.choices[0].message.content;
+            await interaction.editReply(messageContent);
+        } else {
+            console.log('No valid response from OpenAI API');
+            await interaction.editReply('No valid response from OpenAI API');
+        }
+
 	},
 };
