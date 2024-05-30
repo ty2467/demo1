@@ -25,9 +25,6 @@ module.exports = {
         } catch (error){
             console.error ("Error; ", error)
         }
-        /**
-         * the working code ends here
-         */
     },
         
 };

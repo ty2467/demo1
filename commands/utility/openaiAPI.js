@@ -1,12 +1,14 @@
 const { SlashCommandBuilder } = require('discord.js');
 const axios = require('axios');
+require('dotenv').config();
 
 
 async function callOpenAI() {
     const url = 'https://api.openai.com/v1/chat/completions'
+    apiKey = process.env.OPENAI_API_KEY;
     const headers = {
         "Content-Type": "application/json",
-        "Authorization": "Bearer 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",
+        "Authorization": `Bearer ${apiKey}`,
     };
 
     console.log("executed")
@@ -14,6 +16,7 @@ async function callOpenAI() {
     try {
         const response = await axios.post(url, {
             model: "gpt-3.5-turbo",
+            
             messages: [{ role: "user", content: "Say this is a test!" }],
             temperature: 0.7
         }, { headers });
