@@ -12,7 +12,7 @@ async function callOpenAI(prompt) {
     };
 
     console.log(prompt)
-    
+
 
     
     try {
@@ -34,7 +34,7 @@ async function callOpenAI(prompt) {
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('openaiapi')
-		.setDescription('calls gpt4 for chat completion')
+		.setDescription('calls gpt-3.5-turbo for chat completion')
         .addStringOption(option =>
             option.setName('your_message')
                 .setDescription('The message to be sent to chatgpt')

@@ -4,8 +4,8 @@ const fetch = require('node-fetch');
 
 module.exports = {
 	data: new SlashCommandBuilder()
-		.setName('visit_website')
-		.setDescription('visits website')
+		.setName('visit_website_html')
+		.setDescription('visits a html webpage')
         .addStringOption(option =>  
             option.setName('url')
                 .setDescription('The link to  visit')
