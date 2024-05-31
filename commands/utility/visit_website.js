@@ -16,6 +16,7 @@ module.exports = {
 
         try{
             const response = await fetch(theurl);
+            console.log(response);
             const html = await response.text();
             const $ = cheerio.load(html);
             out = "";
